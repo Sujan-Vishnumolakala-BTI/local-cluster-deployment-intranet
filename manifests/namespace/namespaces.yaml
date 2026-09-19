@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+  labels:
+    project: local-cluster-deployment
+    component: monitoring
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: logging
+  labels:
+    project: local-cluster-deployment
+    component: logging
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: backup
+  labels:
+    project: local-cluster-deployment
+    component: backup

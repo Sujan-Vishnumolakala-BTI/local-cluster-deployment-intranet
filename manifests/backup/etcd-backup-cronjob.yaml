@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: etcd-backup
+  namespace: backup
+  labels:
+    app: etcd-backup
+spec:
+  schedule: "0 2 * * *"
+
+  concurrencyPolicy: Forbid
+
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+
+  jobTemplate:
+    metadata:
+      labels:
+        app: etcd-backup
+
+    spec:
+      backoffLimit: 2
+
+      template:
+        metadata:
+          labels:
+            app: etcd-backup
+
+        spec:
+          restartPolicy: OnFailure
+
+          containers:
+            - name: etcd-backup
+              image: local-etcd-backup:latest
+              imagePullPolicy: IfNotPresent
+
+              env:
+                - name: BACKUP_DIR
+                  value: /backup
+
+              volumeMounts:
+                - name: backup-storage
+                  mountPath: /backup
+
+                - name: etcd-certs
+                  mountPath: /etc/kubernetes/pki/etcd
+                  readOnly: true
+
+          volumes:
+            - name: backup-storage
+              persistentVolumeClaim:
+                claimName: etcd-backup-pvc
+
+            - name: etcd-certs
+              hostPath:
+                path: /etc/kubernetes/pki/etcd
+                type: Directory

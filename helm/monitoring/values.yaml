@@ -1,0 +1,117 @@
+# ============================================================
+# kube-prometheus-stack
+# Local Kubernetes Cluster Deployment
+# ============================================================
+
+# ------------------------------------------------------------
+# Grafana
+# ------------------------------------------------------------
+
+grafana:
+  enabled: true
+
+  adminUser: admin
+
+  service:
+    type: ClusterIP
+
+  persistence:
+    enabled: true
+    type: pvc
+
+    accessModes:
+      - ReadWriteOnce
+
+    size: 5Gi
+
+    # Change this if your OpenEBS StorageClass has
+    # a different name.
+    storageClassName: openebs-hostpath
+
+
+# ------------------------------------------------------------
+# Prometheus
+# ------------------------------------------------------------
+
+prometheus:
+  enabled: true
+
+  prometheusSpec:
+
+    retention: 7d
+
+    resources:
+
+      requests:
+        cpu: 250m
+        memory: 512Mi
+
+      limits:
+        cpu: "1"
+        memory: 2Gi
+
+    storageSpec:
+
+      volumeClaimTemplate:
+
+        spec:
+
+          storageClassName: openebs-hostpath
+
+          accessModes:
+            - ReadWriteOnce
+
+          resources:
+
+            requests:
+              storage: 20Gi
+
+
+# ------------------------------------------------------------
+# Alertmanager
+# ------------------------------------------------------------
+
+alertmanager:
+  enabled: true
+
+  alertmanagerSpec:
+
+    storage:
+
+      volumeClaimTemplate:
+
+        spec:
+
+          storageClassName: openebs-hostpath
+
+          accessModes:
+            - ReadWriteOnce
+
+          resources:
+
+            requests:
+              storage: 5Gi
+
+
+# ------------------------------------------------------------
+# Node Exporter
+# ------------------------------------------------------------
+
+prometheus-node-exporter:
+  enabled: true
+
+
+# ------------------------------------------------------------
+# Kubernetes State Metrics
+# ------------------------------------------------------------
+
+kube-state-metrics:
+  enabled: true
+
+
+# ------------------------------------------------------------
+# Default Prometheus Rules
+# ------------------------------------------------------------
+
+defaultRules:
+  create: true

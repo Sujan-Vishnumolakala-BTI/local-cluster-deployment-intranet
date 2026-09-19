@@ -1,0 +1,42 @@
+# ============================================================
+# OpenEBS Values
+# Local Kubernetes Cluster Deployment
+# ============================================================
+
+# ------------------------------------------------------------
+# LocalPV / Hostpath
+# ------------------------------------------------------------
+#
+# This project uses OpenEBS local storage for local workloads.
+#
+# IMPORTANT:
+# Local storage is node-local. It does not automatically provide
+# cross-node replication.
+# ------------------------------------------------------------
+
+localpv-provisioner:
+  enabled: true
+
+# ------------------------------------------------------------
+# OpenEBS default settings
+# ------------------------------------------------------------
+
+engines:
+  local:
+    lvm:
+      enabled: false
+    zfs:
+      enabled: false
+    rawfile:
+      enabled: false
+
+  replicated:
+    mayastor:
+      enabled: false
+
+# ------------------------------------------------------------
+# OpenEBS LocalPV
+# ------------------------------------------------------------
+
+localpv:
+  enabled: true

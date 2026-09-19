@@ -1,0 +1,82 @@
+# ============================================================
+# Loki
+# Local Kubernetes Cluster Deployment
+# ============================================================
+
+# ------------------------------------------------------------
+# Deployment mode
+# ------------------------------------------------------------
+
+deploymentMode: SingleBinary
+
+
+# ------------------------------------------------------------
+# Loki configuration
+# ------------------------------------------------------------
+
+loki:
+
+  auth_enabled: false
+
+  commonConfig:
+    replication_factor: 1
+
+  storage:
+    type: filesystem
+
+  limits_config:
+
+    retention_period: 168h
+
+    allow_structured_metadata: true
+
+    volume_enabled: true
+
+
+# ------------------------------------------------------------
+# Single Binary
+# ------------------------------------------------------------
+
+singleBinary:
+
+  replicas: 1
+
+  persistence:
+
+    enabled: true
+
+    storageClass: openebs-hostpath
+
+    accessModes:
+      - ReadWriteOnce
+
+    size: 20Gi
+
+
+# ------------------------------------------------------------
+# Gateway
+# ------------------------------------------------------------
+
+gateway:
+  enabled: false
+
+
+# ------------------------------------------------------------
+# Monitoring
+# ------------------------------------------------------------
+
+monitoring:
+
+  selfMonitoring:
+    enabled: false
+
+  lokiCanary:
+    enabled: false
+
+
+# ------------------------------------------------------------
+# Loki tests
+# ------------------------------------------------------------
+
+test:
+  enabled: false
