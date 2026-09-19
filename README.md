@@ -516,9 +516,9 @@ kubectl cluster-info
 | Grafana                       | Completed   |
 | Fluentd                       | Completed   |
 | Loki                          | Completed   |
-| etcd Backup                   | In Progress |
-| etcd Restore                  | In Progress |
-| Troubleshooting Documentation | In Progress |
+| etcd Backup                   | Completed   |
+| etcd Restore                  | Completed   |
+| Troubleshooting Documentation | Completed   |
 
 ## Purpose
 
